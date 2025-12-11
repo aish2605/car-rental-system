@@ -1,0 +1,23 @@
+.admin-dashboard-container {
+  padding: 50px;
+  text-align: center;
+}
+
+.admin-actions {
+  margin-top: 40px;
+}
+
+.admin-btn {
+  padding: 14px 30px;
+  margin: 12px;
+  font-size: 18px;
+  border-radius: 6px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.admin-btn:hover {
+  background-color: #0056b3;
+}

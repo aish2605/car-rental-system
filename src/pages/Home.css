@@ -1,0 +1,35 @@
+.home-container {
+  background: url("https://images.unsplash.com/photo-1502877338535-766e1452684a") no-repeat center/cover;
+  height: 92vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-text {
+  background: rgba(0,0,0,0.6);
+  padding: 20px 40px;
+  border-radius: 8px;
+  text-align: center;
+  color: #fff;
+}
+
+.home-text h1 {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.home-btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 25px;
+  background: #ff0000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.home-btn:hover {
+  background: #cc0000;
+}

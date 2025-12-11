@@ -1,0 +1,56 @@
+.register-container {
+  width: 350px;
+  margin: 100px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.register-container h2 {
+  margin-bottom: 20px;
+}
+
+.register-container input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+}
+
+.register-container button {
+  width: 95%;
+  padding: 10px;
+  margin-top: 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.register-container button:hover {
+  background-color: #1d7c33;
+}
+
+.message {
+  color: green;
+  margin-bottom: 10px;
+}
+
+.login-text {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.login-text a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-text a:hover {
+  text-decoration: underline;
+}
