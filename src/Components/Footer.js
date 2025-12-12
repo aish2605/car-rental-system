@@ -4,9 +4,10 @@ import "./Footer.css";
 const Footer = () => {
   return (
     <footer className="footer">
-      <p>© {new Date().getFullYear()} Car Rental System | Designed by You 🚗✨</p>
+      <p>&copy; 2025 Car Rental System. All Rights Reserved.</p>
     </footer>
   );
 };
 
 export default Footer;
+

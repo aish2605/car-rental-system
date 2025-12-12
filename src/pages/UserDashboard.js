@@ -1,7 +1,9 @@
 import React from "react";
 import "./Dashboard.css"; // optional CSS
+import { useNavigate } from "react-router-dom";
 
 const UserDashboard = () => {
+  const navigate = useNavigate();
   const username = localStorage.getItem("username"); // we will save username after login
 
   return (
@@ -17,12 +19,13 @@ const UserDashboard = () => {
           View & Book Cars 🚗
         </button>
 
-        <button 
-          className="btn" 
-          onClick={() => (window.location.href = "/user/bookings")}
-        >
-          My Bookings 📄
-        </button>
+       <button 
+                    className="btn" 
+                    // 3. 🛑 FIX: window.location.href को हटाकर navigate का उपयोग करें
+                    onClick={() => navigate("/user/bookings")}
+                >
+                    My Bookings 📄
+                </button>
       </div>
     </div>
   );

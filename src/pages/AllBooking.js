@@ -1,44 +1,33 @@
 import React, { useEffect, useState } from "react";
+import axiosInstance from "../api/axiosConfig";
 
-const AllBookings = () => {
+
+const AllBooking = () => {
   const [bookings, setBookings] = useState([]);
 
+  const fetchBookings = async () => {
+    try {
+      const res = await axiosInstance.get("/bookings");
+      setBookings(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
-    const allBookings = JSON.parse(localStorage.getItem("bookings") || "[]");
-    setBookings(allBookings);
+    fetchBookings();
   }, []);
 
   return (
-    <div style={{ padding: "30px" }}>
+    <div className="all-bookings">
       <h2>All Bookings</h2>
-      {bookings.length === 0 ? (
-        <p>No bookings yet.</p>
-      ) : (
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr>
-              <th>User</th>
-              <th>Car</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Notes</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bookings.map((b, idx) => (
-              <tr key={idx}>
-                <td>{b.user}</td>
-                <td>{b.carName}</td>
-                <td>{b.startDate}</td>
-                <td>{b.endDate}</td>
-                <td>{b.notes}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+      <ul>
+        {bookings.map(b => (
+          <li key={b.id}>{b.user.name} booked {b.car.name} ({b.car.model}) on {b.date}</li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default AllBookings;
+export default AllBooking;
