@@ -1,74 +1,77 @@
-import React, { useState, useContext, useEffect } from "react"; 
+import React, { useState } from "react";
+import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
-import axiosInstance from "../api/axiosConfig";
-import "./Login.css";
+import { useAuth } from "../auth/AuthContext";
+import "./login.css";
 
 const Login = () => {
-    // 1. PLACE ALL HOOKS AT THE TOP LEVEL OF THE COMPONENT
-    const { auth, setAuth } = useContext(AuthContext); 
-    const navigate = useNavigate();
-    const [form, setForm] = useState({ email: "", password: "" });
-    const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
-    const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-    // 2. USE useEffect FOR SAFE NAVIGATION AFTER AUTH STATE UPDATE
-    useEffect(() => {
-        // This runs whenever the 'auth' state changes (i.e., after successful login)
-        if (auth.isLoggedIn && auth.role) {
-            // Now that auth.role is definitely set in context, navigate safely
-            if (auth.role === "ADMIN") {
-                navigate("/admin");
-            } else if (auth.role === "USER") {
-                navigate("/user");
-            }
-        }
-    }, [auth, navigate]); // Depend on 'auth' state and 'navigate' function
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError("");
+    try {
+      const res = await api.post("/auth/login", {
+        email,
+        password,
+      });
 
-        if (!form.email || !form.password) {
-            setError("All fields are required");
-            return;
-        }
+      // save token + role
+      login(res.data.token, res.data.role);
+localStorage.setItem("userId", res.data.userId);
+navigate("/dashboard");
+      // ✅ USER → dashboard
+      if (res.data.role === "USER" || res.data.role === "ROLE_USER") {
+        navigate("/dashboard");
+      }
+      // ✅ ADMIN → admin dashboard (future use)
+      else if (res.data.role === "ADMIN" || res.data.role === "ROLE_ADMIN") {
+        navigate("/admin");
+      }
+      else {
+        navigate("/unauthorized");
+      }
 
-        try {
-            const res = await axiosInstance.post("/auth/login", form);
+    } catch (err) {
+      setError("Invalid email or password");
+    }
+  };
 
-            // Save credentials to Local Storage (Step 1)
-            localStorage.setItem("token", res.data.token);
-            localStorage.setItem("username", res.data.username);
-            localStorage.setItem("role", res.data.role);
+  return (
+    <div className="login-container">
+      <form className="login-box" onSubmit={handleSubmit}>
+        <h2>Login</h2>
 
-            // Update Context State (Step 2: This triggers the useEffect above)
-            setAuth({ 
-                isLoggedIn: true, 
-                username: res.data.username, 
-                role: res.data.role 
-            });
+        {error && <p className="error">{error}</p>}
 
-            // DO NOT CALL navigate() HERE. useEffect handles the redirection.
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+           autoComplete="off"
+        />
 
-        } catch (err) {
-            setError("Invalid email or password");
-        }
-    };
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+           autoComplete="off"
+        />
 
-    return (
-        <div className="login-container">
-            <h2>Login</h2>
-            {error && <p className="error-msg">{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <input type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} />
-                <input type="password" name="password" placeholder="Password" value={form.password} onChange={handleChange} />
-                <button type="submit">Login</button>
-            </form>
-            <p>Don't have an account? <a href="/register">Register</a></p>
-        </div>
-    );
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  );
 };
 
 export default Login;

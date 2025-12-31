@@ -1,44 +1,63 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axiosInstance from "../api/axiosConfig";
+import axios from "axios";
+import { useNavigate } from "react-router-dom"; // <-- import
 import "./Register.css";
 
 const Register = () => {
-  const navigate = useNavigate();
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
-  const [message, setMessage] = useState("");
-
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  
+  const navigate = useNavigate(); // <-- initialize
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
-
-    if (!form.name || !form.email || !form.password) {
-      setMessage("All fields are required");
-      return;
-    }
 
     try {
-      await axiosInstance.post("/auth/register", form);
-      setMessage("Registration successful! Redirecting to login...");
-      setTimeout(() => navigate("/login"), 2000);
+      await axios.post("http://localhost:8080/auth/register", {
+        name,
+        email,
+        password,
+      });
+
+      alert("Registration successful. Please login.");
+      navigate("/login"); // <-- redirect to login page
     } catch (err) {
-      setMessage("User already exists or something went wrong");
+      alert("Registration failed");
     }
   };
 
   return (
     <div className="register-container">
-      <h2>Register</h2>
-      {message && <p className="message">{message}</p>}
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Full Name" value={form.name} onChange={handleChange} />
-        <input type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} />
-        <input type="password" name="password" placeholder="Password" value={form.password} onChange={handleChange} />
+      <form className="register-box" onSubmit={handleSubmit}>
+        <h2>Register</h2>
+
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+
         <button type="submit">Register</button>
       </form>
-      <p>Already have an account? <a href="/login">Login</a></p>
     </div>
   );
 };
