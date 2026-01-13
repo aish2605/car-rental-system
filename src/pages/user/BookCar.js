@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api/axios";
+import styles from "./BookCar.module.css";
 
 const BookCar = () => {
   const { carId } = useParams();
@@ -26,39 +27,45 @@ const BookCar = () => {
       alert("Car booked successfully 🚗");
       navigate("/my-bookings");
     } catch (err) {
-      setError("Booking failed");
+      setError("Booking failed. Try again!");
     }
   };
 
   return (
-    <div>
-      <h2>Book Car</h2>
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <h2 className={styles.title}>Book Your Car</h2>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p className={styles.error}>{error}</p>}
 
-      <form onSubmit={handleBooking}>
-        <label>Start Date:</label>
-        <input
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-          required
-        />
+        <form className={styles.form} onSubmit={handleBooking}>
+          <div className={styles.formGroup}>
+            <label>Start Date:</label>
+            <input
+              type="date"
+              value={startDate}
+                min={new Date().toISOString().split("T")[0]}  
+              onChange={(e) => setStartDate(e.target.value)}
+              required
+            />
+          </div>
 
-        <br />
+          <div className={styles.formGroup}>
+            <label>End Date:</label>
+            <input
+              type="date"
+              value={endDate}
+                min={new Date().toISOString().split("T")[0]}  
+              onChange={(e) => setEndDate(e.target.value)}
+              required
+            />
+          </div>
 
-        <label>End Date:</label>
-        <input
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-          required
-        />
-
-        <br />
-
-        <button type="submit">Confirm Booking</button>
-      </form>
+          <button type="submit" className={styles.button}>
+            Confirm Booking
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

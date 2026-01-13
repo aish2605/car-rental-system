@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../api/axios";
+import "./AdminBooking.css";
 
 const AdminBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -11,18 +12,45 @@ const AdminBookings = () => {
   }, []);
 
   return (
-    <div>
-      <h2>All Bookings</h2>
+    <div className="admin-bookings">
+      <h2 className="title">📋 All Bookings</h2>
 
-      {bookings.map(b => (
-        <div key={b.id} style={{border:"1px solid #ccc", margin:10, padding:10}}>
-          <p>User: {b.user.email}</p>
-          <p>Car: {b.car.brand} {b.car.model}</p>
-          <p>Dates: {b.startDate} → {b.endDate}</p>
-          <p>Total Price: ₹{b.totalPrice}</p>
-           <p>Payment Status: ₹{b.paymentStatus}</p>
-        </div>
-      ))}
+      {bookings.length === 0 && (
+        <p className="empty-text">No bookings found</p>
+      )}
+
+      <div className="booking-grid">
+        {bookings.map((b) => (
+          <div className="booking-card" key={b.id}>
+            <div className="row">
+              <span className="label">User</span>
+              <span>{b.user.email}</span>
+            </div>
+
+            <div className="row">
+              <span className="label">Car</span>
+              <span>{b.car.brand} {b.car.model}</span>
+            </div>
+
+            <div className="row">
+              <span className="label">Dates</span>
+              <span>{b.startDate} → {b.endDate}</span>
+            </div>
+
+            <div className="row">
+              <span className="label">Total Price</span>
+              <span className="price">₹{b.totalPrice}</span>
+            </div>
+
+            <div className="row">
+              <span className="label">Payment Status</span>
+              <span className={`status ${b.paymentStatus?.toLowerCase()}`}>
+                {b.paymentStatus}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

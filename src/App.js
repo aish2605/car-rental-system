@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminBookings from "./pages/admin/AdminBookings";
 import AdminCars from "./pages/admin/AdminCars";
+import Users from "./pages/admin/Users";
 import UserDashboard from "./pages/user/UserDashboard";
 import Home from "./pages/Home";
 import Unauthorized from "./pages/Unauthorized";
@@ -13,7 +14,7 @@ import MyBookings from "./pages/user/MyBookings";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import BookCar from "./pages/user/BookCar";
-
+import UserProfile from "./pages/user/UserProfile";
 function App() {
   return (
     <Router>
@@ -23,41 +24,15 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
-        {/* USER */}
-         <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute role="USER">
-              <UserDashboard />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/cars"
-          element={
-            <ProtectedRoute role="USER">
-              <Cars />
-            </ProtectedRoute>
-          }
-        />
-<Route path="/book/:carId" element={<BookCar />} />
-        <Route
-          path="/my-bookings"
-          element={
-            <ProtectedRoute role="USER">
-              <MyBookings />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* ADMIN */}
-       <Route path="/admin" element={<AdminDashboard />} />
-<Route path="/admin/bookings" element={<AdminBookings />} />
-<Route path="/admin/cars" element={<AdminCars />} />
-
-
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/user" element={<ProtectedRoute role="USER"> <UserDashboard /></ProtectedRoute> }/>
+        <Route path="/cars" element={ <ProtectedRoute role="USER"><Cars /> </ProtectedRoute> } />
+        <Route path="/book/:carId" element={<BookCar />} />
+        <Route path="/my-bookings" element={<ProtectedRoute role="USER"> <MyBookings /></ProtectedRoute>} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/bookings" element={<AdminBookings />} />
+        <Route path="/admin/cars" element={<AdminCars />} />
+        <Route path="/admin/users" element={<Users />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
       </Routes>
     </Router>

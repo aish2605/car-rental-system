@@ -29,7 +29,6 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-/* 🔥 THIS WAS MISSING */
 export const useAuth = () => {
   return useContext(AuthContext);
 };

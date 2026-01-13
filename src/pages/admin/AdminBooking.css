@@ -1,0 +1,67 @@
+.admin-bookings {
+  padding: 30px;
+ background: linear-gradient(135deg, #d2e9f6, #083850);
+  min-height: 100vh;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.empty-text {
+  text-align: center;
+  color: #777;
+}
+
+
+.booking-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.booking-card {
+  background: #fff;
+  padding: 18px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.label {
+  font-weight: 600;
+  color: #555;
+}
+
+
+.price {
+  font-weight: bold;
+  color: #007bff;
+}
+
+
+.status {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.status.paid {
+  color: green;
+}
+
+.status.pending {
+  color: orange;
+}
+
+.status.failed {
+  color: red;
+}
+
+

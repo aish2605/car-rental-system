@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import api from "../api/axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // import Link
 import { useAuth } from "../auth/AuthContext";
 import "./login.css";
 
@@ -22,19 +22,18 @@ const Login = () => {
         password,
       });
 
-      // save token + role
+      
       login(res.data.token, res.data.role);
-localStorage.setItem("userId", res.data.userId);
-navigate("/dashboard");
-      // ✅ USER → dashboard
+      localStorage.setItem("userId", res.data.userId);
+
+      
       if (res.data.role === "USER" || res.data.role === "ROLE_USER") {
-        navigate("/dashboard");
+        navigate("/user");
       }
-      // ✅ ADMIN → admin dashboard (future use)
+     
       else if (res.data.role === "ADMIN" || res.data.role === "ROLE_ADMIN") {
         navigate("/admin");
-      }
-      else {
+      } else {
         navigate("/unauthorized");
       }
 
@@ -43,10 +42,18 @@ navigate("/dashboard");
     }
   };
 
-  return (
+ return (
+  <div className="login-wrapper">
+   
+    <div className="login-image">
+      <h1>Welcome Back 🚗</h1>
+     
+    </div>
+
+   
     <div className="login-container">
-      <form className="login-box" onSubmit={handleSubmit}>
-        <h2>Login</h2>
+      <form className="login-box" onSubmit={handleSubmit} autoComplete="off">
+        <h1>Login</h1>
 
         {error && <p className="error">{error}</p>}
 
@@ -56,7 +63,7 @@ navigate("/dashboard");
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-           autoComplete="off"
+          autoComplete="new-email" 
         />
 
         <input
@@ -65,13 +72,19 @@ navigate("/dashboard");
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-           autoComplete="off"
+          autoComplete="new-password" 
         />
 
         <button type="submit">Login</button>
+
+        <p className="register-text">
+          Don't have an account? <Link to="/register">Register here</Link>
+        </p>
       </form>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default Login;

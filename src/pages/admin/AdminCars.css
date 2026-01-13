@@ -1,0 +1,93 @@
+.admin-cars {
+  padding: 30px;
+  background: linear-gradient(135deg, #d2e9f6, #083850);background: linear-gradient(135deg, #d2e9f6, #083850);
+  min-height: 100vh;
+}
+
+
+.admin-cars .title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1f8ece;
+}
+
+
+.admin-cars .car-form {
+  background: #fff;
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto 30px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 0 10px #7ec9f4;
+ 
+}
+
+.admin-cars .car-form input {
+  padding: 12px;
+  border: 1px solid #97d9f8;
+  border-radius: 6px;
+  box-shadow: 0 0 5px #7ec9f4;
+}
+
+
+.admin-cars .preview-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+
+.admin-cars .btn {
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+}
+
+.admin-cars .primary {
+  background: #7ec9f4;
+}
+
+.admin-cars .edit {
+  background: #129f0e;
+}
+
+.admin-cars .delete {
+  background: #dc3545;
+  color: white;
+}
+
+
+.admin-cars .car-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.admin-cars .car-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+   border:1px solid #1f8ece;
+}
+
+.admin-cars .car-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.admin-cars .actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}

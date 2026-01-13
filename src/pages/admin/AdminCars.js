@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "../../api/axios";
+import "./AdminCars.css";
 
 const AdminCars = () => {
   const [cars, setCars] = useState([]);
+  const [editingId, setEditingId] = useState(null);
 
   const [form, setForm] = useState({
     brand: "",
@@ -11,9 +13,6 @@ const AdminCars = () => {
     imageUrl: ""
   });
 
-  const [editingId, setEditingId] = useState(null);
-
-  // 🔹 LOAD ALL CARS
   const loadCars = async () => {
     try {
       const res = await api.get("/cars");
@@ -27,41 +26,26 @@ const AdminCars = () => {
     loadCars();
   }, []);
 
-  // 🔹 HANDLE INPUT CHANGE
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // 🔹 ADD OR UPDATE CAR
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       if (editingId) {
-        // UPDATE
         await api.put(`/cars/update/${editingId}`, form);
       } else {
-        // ADD
         await api.post("/cars/add", form);
       }
-
-      setForm({
-        brand: "",
-        model: "",
-        price_per_day: "",
-        imageUrl: ""
-      });
+      setForm({ brand: "", model: "", price_per_day: "", imageUrl: "" });
       setEditingId(null);
       loadCars();
-    } catch (err) {
+    } catch {
       alert("Operation failed");
     }
   };
 
-  // 🔹 EDIT BUTTON
   const handleEdit = (car) => {
     setForm({
       brand: car.brand,
@@ -72,105 +56,50 @@ const AdminCars = () => {
     setEditingId(car.id);
   };
 
-  // 🔹 DELETE BUTTON
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this car?")) return;
-
-    try {
-      await api.delete(`/cars/delete/${id}`);
-      loadCars();
-    } catch (err) {
-      alert("Delete failed");
-    }
+    if (!window.confirm("Delete this car?")) return;
+    await api.delete(`/cars/delete/${id}`);
+    loadCars();
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Admin – Manage Cars</h2>
+    <div className="admin-cars">
+      <h2 className="title">🚗 Managing Cars 🚗</h2>
 
-      {/* 🔹 ADD / UPDATE FORM */}
-      <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
-        <input
-          type="text"
-          name="brand"
-          placeholder="Brand"
-          value={form.brand}
-          onChange={handleChange}
-          required
-        />
+      
+      <form className="car-form" onSubmit={handleSubmit}>
+        <input name="brand" placeholder="Brand" value={form.brand} onChange={handleChange} required />
+        <input name="model" placeholder="Model" value={form.model} onChange={handleChange} required />
+        <input type="number" name="price_per_day" placeholder="Price per day" value={form.price_per_day} onChange={handleChange} required />
+        <input name="imageUrl" placeholder="Image URL" value={form.imageUrl} onChange={handleChange} />
 
-        <input
-          type="text"
-          name="model"
-          placeholder="Model"
-          value={form.model}
-          onChange={handleChange}
-          required
-        />
+        {form.imageUrl && (
+          <img src={form.imageUrl} alt="Preview" className="preview-img" />
+        )}
 
-        <input
-          type="number"
-          name="price_per_day"
-          placeholder="Price per day"
-          value={form.price_per_day}
-          onChange={handleChange}
-          required
-        />
-
-        <input
-          type="text"
-          name="imageUrl"
-          placeholder="Image URL"
-          value={form.imageUrl}
-          onChange={handleChange}
-        />
-
-        <button type="submit">
+        <button type="submit" className="btn primary">
           {editingId ? "Update Car" : "Add Car"}
         </button>
       </form>
 
-      <hr />
+    
+      <div className="car-grid">
+        {cars.map((car) => (
+          <div className="car-card" key={car.id}>
+            {car.imageUrl && (
+              <img src={car.imageUrl} alt={car.brand} className="car-img" />
+            )}
 
-      {/* 🔹 CAR LIST */}
-      {cars.length === 0 && <p>No cars found</p>}
-
-      {cars.map((car) => (
-        <div
-          key={car.id}
-          style={{
-            border: "1px solid #ccc",
-            padding: "10px",
-            marginBottom: "10px",
-            display: "flex",
-            gap: "20px",
-            alignItems: "center"
-          }}
-        >
-          {/* IMAGE */}
-          {car.imageUrl && (
-            <img
-              src={car.imageUrl}
-              alt={car.brand}
-              width="150"
-            />
-          )}
-
-          {/* DETAILS */}
-          <div>
-            <p><b>{car.brand}</b> {car.model}</p>
+            <h3>{car.brand} {car.model}</h3>
             <p>₹{car.price_per_day} / day</p>
 
-            <button onClick={() => handleEdit(car)}>Edit</button>
-            <button
-              onClick={() => handleDelete(car.id)}
-              style={{ marginLeft: "10px" }}
-            >
-              Delete
-            </button>
+            <div className="actions">
+              <button onClick={() => handleEdit(car)} className="btn edit">Edit</button>
+              <button onClick={() => handleDelete(car.id)} className="btn delete">Delete</button>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

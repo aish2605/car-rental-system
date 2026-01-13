@@ -1,5 +1,7 @@
 .cars-container {
   padding: 20px;
+  background: linear-gradient(135deg, #d2e9f6, #083850);
+  
 }
 
 .cars-grid {
@@ -13,8 +15,9 @@
   border-radius: 10px;
   padding: 15px;
   text-align: center;
-  background: #fff;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+border:1px solid rgb(21, 164, 221);
+   background-color: white;
+  box-shadow: 0 4px 8px rgba(177, 180, 181, 0.912);
 }
 
 .car-card img {
@@ -27,7 +30,7 @@
 .car-card button {
   margin-top: 10px;
   padding: 8px 15px;
-  background: #007bff;
+  background:rgb(36, 143, 36);
   color: white;
   border: none;
   border-radius: 5px;

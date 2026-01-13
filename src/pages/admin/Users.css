@@ -1,0 +1,68 @@
+.admin-users {
+  padding: 30px;
+  background: #f4f6f8;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #d2e9f6, #083850);
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.empty-text {
+  text-align: center;
+  color: #777;
+}
+
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.users-table thead {
+  background: #48ace6;
+  color: white;
+}
+
+.users-table th,
+.users-table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.users-table tbody tr {
+  border-bottom: 1px solid #eee;
+}
+
+.users-table tbody tr:hover {
+  background: #abe0f094;
+}
+
+
+.role {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.role.admin {
+  background: #dc3545;
+  color: white;
+}
+
+.role.user {
+  background: #28a745;
+  color: white;
+}
